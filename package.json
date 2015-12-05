@@ -1,0 +1,14 @@
+{
+  "name": "netsuiteManagerBot",
+  "version": "0.0.1",
+  "description": "Manages communication between NetSuite and Slack",
+  "main": "app.js",
+  "author": "Andrew Crumrine",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.x.x",
+    "express": "^4.x.x",
+    "request": "2.56.x",
+    "slack-client": "^1.4.1"
+  }
+}
