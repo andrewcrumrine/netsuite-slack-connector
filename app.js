@@ -64,7 +64,7 @@ slack.on('message', function (message) {
         if (text == 'time to go bot.') {
     		response = message.channel;
             response += ' But ' + user.name + ' why???';
-    		slack.createChannel('test-group');
+    		slack.createGroup('test-group');
     		//	testGroup
     		channel.send(response);
     		//channel.leave();
