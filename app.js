@@ -71,7 +71,7 @@ slack.on('message', function (message) {
     	}
         else {
             response = text.split('').reverse().join('');
-            response += '-what?';
+            response += '-what';
             channel.send(response);
         }
 		return console.log("@" + slack.self.name + " responded with \"" + response + "\"");
