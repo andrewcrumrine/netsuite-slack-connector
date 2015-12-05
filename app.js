@@ -43,6 +43,7 @@ slack.on('open', function() {
     return _results;
   })();
   console.log("Welcome to Slack. You are @" + slack.self.name + " of " + slack.team.name);
+  console.log('You are in: ' + channels.length + ' channels.');
   console.log('You are in: ' + channels.join(', '));
   console.log('As well as: ' + groups.join(', '));
   messages = unreads === 1 ? 'message' : 'messages';
