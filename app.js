@@ -66,7 +66,7 @@ slack.on('message', function (message) {
         if (text == 'time to go bot.') {
     		response = message.channel;
             response += ' But ' + user.name + ' why???';
-    		slack.createGroup('test-group');
+    		admin.createGroup('test-group');
     		//	testGroup
     		channel.send(response);
     		//channel.leave();
@@ -144,19 +144,8 @@ admin.on('message', function (message) {
     userName = (user != null ? user.name : void 0) != null ? "@" + user.name : "UNKNOWN_USER";
     console.log("Received: " + type + " " + channelName + " " + userName + " " + ts + " \"" + text + "\"");
     if (type === 'message' && (text != null) && (channel != null)) {
-        if (text == 'time to go bot.') {
-    		response = message.channel;
-            response += ' But ' + user.name + ' why???';
-    		admin.createGroup('test-group');
-    		//	testGroup
-    		channel.send(response);
-    		//channel.leave();
-    		//return console.log('@' + slack.self.name + ' left channel: ' + channel.name);
-    	}
-        else {
-            response = text.split('').reverse().join('');
-            response += '-what';
-            channel.send(response);
+        response = text.split('').reverse().join('');
+        channel.send(response);
         }
 		return console.log("@" + admin.self.name + " responded with \"" + response + "\"");
     }
