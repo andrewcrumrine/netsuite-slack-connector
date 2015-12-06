@@ -66,7 +66,7 @@ slack.on('message', function (message) {
         if (text == 'time to go bot.') {
     		response = message.channel;
             response += ' But ' + user.name + ' why???';
-    		admin.createGroup('test-group');
+    		//admin.createGroup('test-group');
     		//	testGroup
     		channel.send(response);
     		//channel.leave();
@@ -95,7 +95,7 @@ slack.on('error', function(error) {
 slack.login();
 
 
-
+/*
 admin.on('open', function() {
   var channel, channels, group, groups, id, messages, unreads;
   channels = [];
@@ -162,7 +162,7 @@ admin.on('error', function(error) {
   return console.error("Error: " + error);
 });
 
-admin.login();
+admin.login();*/
 var app = express();
 var port = process.env.PORT || 1337;
 
