@@ -12,7 +12,9 @@ autoReconnect = true;
 
 autoMark = true;
 
-slack = new Slack(ADMIN_TOKEN, autoReconnect, autoMark);
+slack = new Slack(BOT_TOKEN, autoReconnect, autoMark);
+admin = new Slack(ADMIN_TOKEN, autoReconnect, autoMark);
+
 slack.on('open', function() {
   var channel, channels, group, groups, id, messages, unreads;
   channels = [];
@@ -91,6 +93,87 @@ slack.on('error', function(error) {
 });
 
 slack.login();
+
+
+
+admin.on('open', function() {
+  var channel, channels, group, groups, id, messages, unreads;
+  channels = [];
+  groups = [];
+  unreads = admin.getUnreadCount();
+  channels = (function() {
+    var _ref, _results;
+    _ref = admin.channels;
+    _results = [];
+    for (id in _ref) {
+      channel = _ref[id];
+      if (channel.is_member) {
+        _results.push("#" + channel.name);
+      }
+    }
+    return _results;
+  })();
+  groups = (function() {
+    var _ref, _results;
+    _ref = admin.groups;
+    _results = [];
+    for (id in _ref) {
+      group = _ref[id];
+      if (group.is_open && !group.is_archived) {
+        _results.push(group.name);
+      }
+    }
+    return _results;
+  })();
+  console.log("Welcome to Slack. You are @" + slack.self.name + " of " + admin.team.name);
+  console.log('You are in ' + channels.length + ' channels.');
+  console.log('You are in ' + channels.join(', '));
+  console.log('As well as ' + groups.join(', '));
+  messages = unreads === 1 ? 'message' : 'messages';
+  return console.log("You have " + unreads + " unread " + messages);
+});
+
+admin.on('message', function (message) {
+    var channel, channelError, channelName, errors, response, text, textError, ts, type, typeError, user, userName;
+    channel = slack.getChannelGroupOrDMByID(message.channel);
+    user = slack.getUserByID(message.user);
+    response = '';
+    type = message.type, ts = message.ts, text = message.text;
+    channelName = (channel != null ? channel.is_channel : void 0) ? '#' : '';
+    channelName = channelName + (channel ? channel.name : 'UNKNOWN_CHANNEL');
+    userName = (user != null ? user.name : void 0) != null ? "@" + user.name : "UNKNOWN_USER";
+    console.log("Received: " + type + " " + channelName + " " + userName + " " + ts + " \"" + text + "\"");
+    if (type === 'message' && (text != null) && (channel != null)) {
+        if (text == 'time to go bot.') {
+    		response = message.channel;
+            response += ' But ' + user.name + ' why???';
+    		admin.createGroup('test-group');
+    		//	testGroup
+    		channel.send(response);
+    		//channel.leave();
+    		//return console.log('@' + slack.self.name + ' left channel: ' + channel.name);
+    	}
+        else {
+            response = text.split('').reverse().join('');
+            response += '-what';
+            channel.send(response);
+        }
+		return console.log("@" + admin.self.name + " responded with \"" + response + "\"");
+    }
+    else {
+        typeError = type !== 'message' ? "unexpected type " + type + "." : null;
+        textError = text == null ? 'text was undefined.' : null;
+        channelError = channel == null ? 'channel was undefined.' : null;
+        errors = [typeError, textError, channelError].filter(function(element) {return element !== null;}).join(' ');
+        return console.log("@" + slack.self.name + " could not respond. " + errors);
+    }
+} );
+
+admin.on('error', function(error) {
+  return console.error("Error: " + error);
+});
+
+admin.login();
 var app = express();
 var port = process.env.PORT || 1337;
 
