@@ -1,7 +1,3 @@
-
-var NP_TOKEN						= 'kl7ZgitLA94xvPOub5Z7P8ME';
-var BOT_TOKEN						= 'xoxb-15587865602-ze1cuLjNyWxcEJcvZF1hjWWb';
-var ADMIN_TOKEN                     = 'xoxp-4351127952-4351127954-16016732114-18a0255dcf';
 var express = require('express');
 var bodyParser = require('body-parser');
 var Slack = require('slack-client');
